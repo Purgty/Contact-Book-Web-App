@@ -1,6 +1,7 @@
 import streamlit as st
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
 import streamlit.components.v1 as components
+import pandas as pd
 from db import (
     create_table,
     add_member,
@@ -13,10 +14,21 @@ from db import (
 )
 
 st.set_page_config(page_title="Contact Manager", layout="wide")
-st.title("📇 Contact Management System")
-
+st.title("📇 Contact Book System")
 # Ensure database table exists
 create_table()
+# Default landing view - centered table of all records
+data = get_members(order_by="mem_id")
+
+if data:
+    df = pd.DataFrame(data, columns=["ID", "First Name", "Last Name", "Gender", "Age", "Address", "Contact"])
+    st.markdown("### 📋 Current Records")
+    st.dataframe(df.reset_index(drop=True), use_container_width=True)
+else:
+    st.info("No contacts found. Please add a new contact using the sidebar.")
+
+# Spacer
+st.markdown("---")
 
 # SIDEBAR ACTIONS
 st.sidebar.header("Actions")
@@ -53,7 +65,8 @@ if action == "Add":
 elif action == "View":
     st.subheader("📋 All Contacts")
     data = get_members(order_by="mem_id")
-    st.dataframe(data, use_container_width=True)
+    df = pd.DataFrame(data, columns=["ID", "First Name", "Last Name", "Gender", "Age", "Address", "Contact"])
+    st.dataframe(df.reset_index(drop=True), use_container_width=True)
 
 # SEARCH CONTACT
 elif action == "Search":
@@ -61,9 +74,10 @@ elif action == "Search":
     search = st.text_input("Enter First Name to Search")
     if st.button("Search"):
         results = search_member_by_firstname(search)
+        df = pd.DataFrame(results, columns=["ID", "First Name", "Last Name", "Gender", "Age", "Address", "Contact"])
         if results:
             st.write("Result(s):")
-            st.dataframe(results)
+            st.dataframe(df.reset_index(drop=True), use_container_width=True)
         else:
             st.warning("No matching contact found.")
 
@@ -77,7 +91,7 @@ elif action == "Delete":
     else:
         import pandas as pd
         df = pd.DataFrame(data, columns=["ID", "First Name", "Last Name", "Gender", "Age", "Address", "Contact"])
-        gb = GridOptionsBuilder.from_dataframe(df)
+        gb = GridOptionsBuilder.from_dataframe(df.reset_index(drop=True))
         gb.configure_selection("single", use_checkbox=True)  # FULL ROW selection
         grid_options = gb.build()
 
@@ -141,7 +155,8 @@ elif action == "Sort":
     # Initial unsorted display
     st.markdown("### 📋 Current Records (Unsorted)")
     current_data = get_members(order_by="mem_id")
-    st.dataframe(current_data, use_container_width=True)
+    df = pd.DataFrame(current_data, columns=["ID", "First Name", "Last Name", "Gender", "Age", "Address", "Contact"])
+    st.dataframe(df.reset_index(drop=True), use_container_width=True)
 
     # Sorting preview
     sort_options = ["--Please select your sorting method--", "First Name", "Last Name", "Age", "Address", "Contact"]
