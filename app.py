@@ -124,25 +124,36 @@ elif action == "Delete":
                         st.rerun()
 
 
-# EDIT CONTACT
 elif action == "Edit":
     st.subheader("✏️ Edit Contact")
     data = get_members()
     if data:
-        selected_id = st.selectbox("Select Contact ID to Edit", [row[1]+" "+row[2] for row in data])
-        selected_row = next((row for row in data if row[0] == selected_id), None)
+        df = pd.DataFrame(data, columns=["ID", "First Name", "Last Name", "Gender", "Age", "Address", "Contact"])
+        unique_firstnames = df["First Name"].unique().tolist()
+        selected_fname = st.selectbox("Select First Name to Edit", unique_firstnames)
 
-        if selected_row:
+        matches = df[df["First Name"] == selected_fname]
+
+        if len(matches) == 1:
+            selected_row = matches.iloc[0]
+        elif len(matches) > 1:
+            selected_row = matches.iloc[0]
+            st.info(f"Multiple entries found for {selected_fname}. Editing the first match.")
+        else:
+            selected_row = None
+
+        if selected_row is not None:
             with st.form("edit_form"):
-                firstname = st.text_input("First Name", selected_row[1])
-                lastname = st.text_input("Last Name", selected_row[2])
-                gender = st.radio("Gender", ["Male", "Female"], index=0 if selected_row[3] == "Male" else 1)
-                age = st.text_input("Age", selected_row[4])
-                address = st.text_input("Address", selected_row[5])
-                contact = st.text_input("Contact", selected_row[6])
+                firstname = st.text_input("First Name", selected_row["First Name"])
+                lastname = st.text_input("Last Name", selected_row["Last Name"])
+                gender_index = ["Male", "Female", "Non-Binary"].index(selected_row["Gender"]) if selected_row["Gender"] in ["Male", "Female", "Non-Binary"] else 0
+                gender = st.radio("Gender", ["Male", "Female", "Non-Binary"], index=gender_index)
+                age = st.text_input("Age", str(selected_row["Age"]))
+                address = st.text_input("Address", selected_row["Address"])
+                contact = st.text_input("Contact", selected_row["Contact"])
                 submitted = st.form_submit_button("Update Contact")
                 if submitted:
-                    update_member(selected_id, firstname, lastname, gender, age, address, contact)
+                    update_member(selected_row["ID"], firstname, lastname, gender, age, address, contact)
                     st.success("Contact updated successfully!")
                     st.rerun()
     else:
