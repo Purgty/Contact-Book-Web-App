@@ -14,7 +14,8 @@ from db import (
 )
 
 st.set_page_config(page_title="Contact Manager", layout="wide")
-st.title("📇 Contact Book System")
+st.markdown("<h1 style='text-align: center;'>📇 Contact Book System</h1>", unsafe_allow_html=True)
+st.title(" ")
 # Ensure database table exists
 create_table()
 # Default landing view - centered table of all records
@@ -22,7 +23,6 @@ data = get_members(order_by="mem_id")
 
 if data:
     df = pd.DataFrame(data, columns=["ID", "First Name", "Last Name", "Gender", "Age", "Address", "Contact"])
-    st.markdown("### 📋 Current Records")
     st.dataframe(df.reset_index(drop=True), use_container_width=True)
 else:
     st.info("No contacts found. Please add a new contact using the sidebar.")

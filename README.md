@@ -1,7 +1,6 @@
 # Contact-Book-Web-App
 A Streamlit-based Contact Book with full CRUD, sorting, and smart UI features using SQLite and AgGrid.
-![App Screenshot](https://github.com/Purgty/Contact-Book-Web-App/blob/main/screenshots/homepage.png)
-
+<img src="https://github.com/Purgty/Contact-Book-Web-App/blob/main/screenshots/homepage.png" alt="Add Contact" width="900"/>
 ---
 
 ## 🚀 Features
@@ -12,7 +11,6 @@ Easily add a new contact with details like name, gender, age, address, and conta
 
 - 📋 View all contacts in a table
 Displays all saved contacts in a clean, scrollable table view.
-<img src="assets/view_contacts.png" alt="View Contacts" width="500"/>
 
 🔍 Search Contact
 Search for a contact by their first name. Displays matching results in real time.
@@ -35,16 +33,6 @@ Sort the entire contact list by first name, last name, age, address, or contact.
 
 ---
 
-## 🖼️ UI Preview
-
-### Add Contact Form
-![Add Contact](images/add_contact.png)
-
-### Sorted Contacts Preview
-![Sorted View](images/sorted_contacts.png)
-
----
-
 ## 🛠️ Tech Stack
 
 - [Streamlit](https://streamlit.io/)
@@ -60,7 +48,7 @@ Sort the entire contact list by first name, last name, age, address, or contact.
 ├── app.py # Main Streamlit app
 ├── db.py # All database functions
 ├── contacts.db # SQLite database
-├── images/ # Screenshots and images for README
+├── screenshots/ # Screenshots and images for README
 ├── README.md # Project documentation
 └── requirements.txt # Python dependencies
 
@@ -71,10 +59,21 @@ Sort the entire contact list by first name, last name, age, address, or contact.
 
 ### ✅ Prerequisites
 
-Make sure you have Python 3.8+ installed. Then install dependencies:
+To setup this project, start by cloning this repository
+```bash
+git clone https://github.com/your-username/contact-book.git
+cd contact-book
+```
 
+Make sure you have Python 3.8+ installed. Then install dependencies:
 ```bash
 pip install -r requirements.txt
+```
+Create a Virtual Environment
+Open the directory and run these commands in it.
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
 ## Running the App
