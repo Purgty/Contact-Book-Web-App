@@ -27,7 +27,7 @@ Search for a contact by their first name. Displays matching results in real time
 Select a contact and update any of their details using the edit form.
 
 <p align="center">
-  <img src="https://github.com/Purgty/Contact-Book-Web-App/blob/main/screenshots/edit.png" alt="Edit Contact" width="500"/>
+  <img src="https://github.com/Purgty/Contact-Book-Web-App/blob/main/screenshots/" alt="Edit Contact" width="500"/>
 </p>
 
 - 🗑️ **Delete contacts with confirmation**  
