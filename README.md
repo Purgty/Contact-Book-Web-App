@@ -1,6 +1,6 @@
 # Contact-Book-Web-App
 A Streamlit-based Contact Book with full CRUD, sorting, and smart UI features using SQLite and AgGrid.
-![App Screenshot](https://postimg.cc/GBjLGVJw)
+![App Screenshot](https://github.com/Purgty/Contact-Book-Web-App/blob/main/assets/screenshots/homepage.png)
 
 ---
 
